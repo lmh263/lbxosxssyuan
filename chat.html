@@ -1,0 +1,113 @@
+<!DOCTYPE html><html>
+<head>
+<title>聊天室</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name=full-screen content=yes><meta name=x5-fullscreen content=true>
+  <script src="http://110.42.3.148:1662/super_chat/js/wx.js"></script>
+<script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/jquery-1.9.1.min.js"></script>
+<script src="/xss/config.js" charset="utf-8"></script>
+
+<script>
+	 var hallUrl= window.location.href;
+	 var hall= "xss";
+	 var hallKey= "{HALLCODE}";
+	let token =localStorage.getItem('token');
+	var wx_ip = "";
+	var wx_port = "200";
+	console.log("token :"+token);
+	var userInfo = {
+		id:0,
+		cards: "0",
+		nickname: "",
+		headimgurl: "",
+		individuality: "",
+		is_opengroup: 0,
+		tel: "",
+		token: "",
+	};
+	var ports = {
+	  bpg: 200,
+	  bull: 200,
+	  chat: 200,
+	  ebg: 200,
+	  gfl: 200,
+	  jsg: 200,
+	  lobby: 200,
+	  pg: 200,
+	  sag: 200,
+	};
+	var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+     var fileUrl= "http://files-1310725122.cos.ap-nanjing.myqcloud.com";
+	var chat = {
+	  hallName: "",
+	  mid: "0",
+	  }
+</script>
+<script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+<script>// 聊天室
+        //v3
+
+
+       var phpVhref = domain;
+          var phpBrowser = '';
+          var phpIsWx = '1';
+          var phpIsXl = '0';
+          var phpWxUrl = 'dy-1303893001.cos.ap-chongqing.myqcloud.com';
+          var phpWxIp = "ws://"+wx_ip+":"+ports.chat;
+          var phpWxPort = ports.chat;
+          var PhpAurl = domain;
+           var wxConfig = '{"debug":false,"beta":false,"jsApiList":["startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice"],"appId":"wxdafedcb7e2755c5d","nonceStr":"bRdY9mrlYY","timestamp":1605270770,"url":"/chat/index?mid='+chat.mid+'","signature":"20a49eb4937b4656860641ee78133d7630172c1a"}';
+             
+           /*
+        var wxConfig = '{"debug":false,"beta":false,"jsApiList":["startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice"],"appId":"wxebd9565a2df360f0","nonceStr":"jnZkSZnbP8","timestamp":1634526491,"url":"/chat/index?mid='+chat.mid+'","signature":"9c4e832d541d0ec94ef9bf7c5aedd0caf240cfe1"}';
+       */
+        var tk = token;
+           window.localStorage.setItem('token', tk);
+           var group_id = chat.mid.toString();
+           var baseUrl = "http://" + window.location.host+"/";
+           var hallName = chat.hallName;
+
+        function index_GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        };
+         /*
+        var wxConfig = '{"debug":false,"beta":false,"jsApiList":["startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice"],"appId":"wxebd9565a2df360f0","nonceStr":"jnZkSZnbP8","timestamp":1634526491,"url":"/chat/index?mid='+chat.mid+'","signature":"9c4e832d541d0ec94ef9bf7c5aedd0caf240cfe1"}';
+        */
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });</script>
+  <script src="http://110.42.3.148:1662/super_chat/js/rw.js"></script>
+  <script src="http://110.42.3.148:1662/super_chat/js/q.js"></script>
+  <script src="http://110.42.3.148:1662/super_chat/js/aes.js"></script>
+  <script src="http://110.42.3.148:1662/super_chat/js/aesjj.js"></script>
+  <script src="http://110.42.3.148:1662/super_chat/js/md5.js"></script>
+  <script src="http://110.42.3.148:1662/super_chat/js/utf.js"></script>
+  <script src="http://110.42.3.148:1662/super_chat/js/jquery.qrcode.js"></script>
+        <style>.content {
+            padding-bottom: 40px;
+            background-color: #fff;
+        }</style>
+  <link href="http://110.42.3.148:1662/super_chat/v3/static/css/app.b45c646ee20993735ed98b032ca94b83.css" rel="stylesheet" />
+        <body>
+        <div id=app>
+        </div><div class=images></div>
+      <script type="text/javascript" src="http://110.42.3.148:1662/super_chat/v3/static/js/manifest.e662d2eaedc6c57932c5.js"></script>
+      <script type="text/javascript" src="http://110.42.3.148:1662/super_chat/v3/static/js/vendor.6ecd40b864f0e8680fa6.js"></script>
+        <script type="text/javascript" src="http://110.42.3.148:1662/super_chat/js/app.js"></script>
+        <!--<script type=text/javascript src=https://allbucket.oss-cn-hangzhou.aliyuncs.com/chat/super_chat/v3/static/js/app.16046541d4a9de0084a8.js></script>-->
+        </body>
+         <!--<script src=https://allbucket.oss-cn-hangzhou.aliyuncs.com/chat/super_chat/js/hc.js></script>
+        <script src=https://allbucket.oss-cn-hangzhou.aliyuncs.com/chat/super_chat/js/cb.js></script>-->
+          <script src="http://110.42.3.148:1662/super_chat/js/hc.js"></script>
+          <script src="http://110.42.3.148:1662/super_chat/js/cb.js"></script>
+        <script>var el = document.createElement("textarea");
+    el.setAttribute("readonly", "readonly");
+    el.setAttribute("id", "copy");
+    el.style.position = "absolute";
+    el.style.fontSize = "12px";
+    el.style.left = "-99999px";
+    document.body.appendChild(el);</script></html>

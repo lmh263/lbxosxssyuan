@@ -1,0 +1,158 @@
+<html>
+<head>
+    <meta charset="utf-8" >
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <title>群组成员</title>
+
+    <script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/fastclick.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://110.42.3.148:1662/xxss/files/css/bull.css">
+    <link rel="stylesheet" type="text/css" href="http://110.42.3.148:1662/xxss/files/css/alert.css">
+
+    <style type="text/css">
+
+        .buttonLeft2{position: absolute;width:100%;line-height: 3.3vh;height: 3.3vh;font-size: 2.5vh;width: 10vh;right:15vh;bottom:2.5vh;text-align:center;background:url("http://110.42.3.148:1662/xxss/files/images/common/button1.png");background-size:100%;}
+        .buttonRight2{position: absolute;width:100%;line-height:3.3vh;height: 3.3vh;font-size: 2.5vh;width: 10vh;right:3vh;bottom:2.5vh;text-align: center;background:url("http://110.42.3.148:1662/xxss/files/images/common/button2.png");background-size:100%;}
+    </style>
+<script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/jquery-1.9.1.min.js"></script>
+<script src="/xss/config.js" charset="utf-8"></script>
+
+<script>
+	 var hallUrl= window.location.href;
+	 var hall= "xss";
+	 var hallKey= "{HALLCODE}";
+	let token =localStorage.getItem('token');
+	var wx_ip = "";
+	var wx_port = "200";
+	console.log("token :"+token);
+	var userInfo = {
+		id:0,
+		cards: "0",
+		nickname: "",
+		headimgurl: "",
+		individuality: "",
+		is_opengroup: 0,
+		tel: "",
+		token: "",
+	};
+	var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+</script>
+<script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+			
+    <script type="text/javascript">
+
+        window.addEventListener('load', function() {
+            FastClick.attach(document.body);
+        }, false);
+
+        var newNum = "";
+        var per = window.innerWidth / 530;
+        var globalData = {
+            "baseUrl": 'http://110.42.3.148:1662/xxss/',
+            "openId":  userInfo.id.toString(),
+            "fileUrl": "http://110.42.3.148:1662/xxss/",
+            "imageUrl": "http://110.42.3.148:1662/xxss/",
+        };
+        var userData = {
+            "accountId": userInfo.id.toString(),
+                    "nickname": userInfo.nickname,
+                    "avatar": userInfo.headimgurl,
+        };
+        var configData = {
+            "appId":'wxe80c085371a93022',
+            "timestamp":'1606792319',
+            "nonceStr":'tTLRcz4TH4FQX0yt',
+            "signature":'74f3ba5791f3d16657940478ba1f0a05fdd07520',
+        };
+
+        //#291c4d
+    </script>
+
+    <style type="text/css">
+        .gameItem{position: absolute;background-color: #291c4d;}
+    </style>
+
+</head>
+
+<body style="background-color: #0e0226">
+
+<div id="loading" style="position: fixed;width:100%;height:100%;top:0;left:0;background: #000" >
+    <img src="http://110.42.3.148:1662/xxss/files/images/common/loading.gif" style="top: 40%;position: absolute;left: 50%;margin-left: -45px;margin-top: -45px;" />
+</div>
+
+<div class="main" id="app-main" style="position: relative; width: 100%;margin: 0 auto; background: #0e0226; display: none;">
+
+    <!-- 提示框 -->
+    <div class="alert" id="valert" v-show="isShowAlert" style="display: none;">
+        <div class="alertBack"></div>
+        <div class="mainPart">
+            <div class="backImg">
+                <div class="blackImg"></div>
+            </div>
+            <div class="alertText">{{alertText}}</div>
+            <div v-show="alertType==3">
+                <div class="buttonLeft" v-on:click="closeAlert">确定</div>
+                <div class="buttonRight" v-on:click="closeAlert">取消</div>
+            </div>
+            <div v-show="alertType==7">
+                <div class="buttonMiddle" v-on:click="closeAlert">确定</div>
+            </div>
+            <div v-show="alertType==8">
+            </div>
+        </div>
+    </div>
+
+    <div style="position: absolute;top: 0;left: 0; width: 100%;height: 18vw;">
+        <input v-model="searchText" type="text" name="mname" placeholder="输入玩家名字" style="padding:0 12px 0 12px;position: absolute;top: 4vw;left: 4vw;width: 76vw;height: 10vw;border-radius:  0.5vh 0 0 0.5vh;font-size: 2.5vh;">
+        <div style="position: absolute;top: 3.9vw;left: 80vw;width: 15vw;height: 10.2vw;line-height: 10.2vw;text-align: center;background-color: rgb(46,44,82);color: rgb(129,214,254);border-radius: 0 0.5vh 0.5vh 0;font-size: 2.5vh;" v-on:click="clickSearch">
+            搜索
+        </div>
+    </div>
+
+    <div style="position: absolute;top: 18vw;left: 0;width: 100%;height: 12vw;background-color: #291c4d;font-size: 2.5vh;line-height: 12vw;text-align: left;color: white;">
+        <div style="position: absolute;left: 4vw">
+            群组成员（{{memberCount}}人）
+        </div>
+    </div>
+
+    <div id="memberDiv" v-bind:style="'position: absolute;top: 30.5vw;left: 0;width: 100%;height: ' + (height - 0.31 * width) + 'px;overflow: hidden;'" >
+        <div style="position: relative;">
+            <div v-for="item in members" style="position: relative;width: 100%;height: 15vw;line-height: 15vw;background-color: #291c4d;text-align: center;margin-top: 0.3vh;color: white;overflow:hidden;">
+                <div style="position: absolute;top: 1vw;left: 4vw;" >
+                    <img v-bind:src="item.avatarUrl" style="position: absolute;top: 0;left: 0;margin-left: 0;width: 8vh;height: 8vh;border-radius: 1vh;">
+                </div>
+
+                <div style="position: absolute;left: 22vw;width: 79vw;height: 15vw;line-height: 15vw;font-size: 2.2vh;text-align: left;">
+                    {{item.name}}
+                </div>
+
+                <div v-show="item.status==0" class="buttonLeft2"  v-on:click="clickDealMember(item, 1)">同意</div>
+                <div v-show="item.status==0" class="buttonRight2" v-on:click="clickDealMember(item, 2)">拒绝</div>
+                <div v-show="item.status==1" class="buttonRight2" v-on:click="clickDealMember(item, 3)">踢出</div>
+
+                <div v-show="item.status==2"  style="position: absolute;right: 0;width: 20%;height: 15vw;line-height: 15vw;font-size: 2.2vh;text-align: left;">已拒绝</div>
+                <div v-show="item.status==3"  style="position: absolute;right: 0;width: 20%;height: 15vw;line-height: 15vw;font-size: 2.2vh;text-align: left;">已踢出</div>
+            </div>
+            <div id="moretext" style="position: relative;background-color: white;color: black;height: 10vw;text-align: center;line-height: 10vw;font-size: 2.2vh;display: none;" >
+                上拉加载更多
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+
+<script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/bscroll.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" ></script>
+<script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/vue.min.js" ></script>
+<script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/vue-resource.min.js" ></script>
+<script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/groupmember.js"></script>
+
+<!-- script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/guild/unionmember/unionmember-1.0.2.min.js"></script ->
+
+</html>

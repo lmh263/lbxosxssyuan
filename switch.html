@@ -1,0 +1,225 @@
+<html>
+    <head>
+        <title>房主巡查</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <script src="http://110.42.3.148:1662/xxss/files/js/vue.min.js"></script>
+        <link rel="stylesheet" href="http://110.42.3.148:1662/xxss/files/css/bootstrap.min.css">
+        <script src="http://110.42.3.148:1662/xxss/files/js/jquery.min.js"></script>
+        <script src="http://110.42.3.148:1662/xxss/files/js/vue-resource.min.js" type="text/javascript"></script>
+        <style>
+            @media screen and (max-width: 320px)and (min-width: 0px) {
+                body {
+                    font-size: 14px;
+                }
+            }
+            @media screen and (max-width: 480px) and (min-width: 321px) {
+                body {
+                    font-size: 18px;
+                }
+            }
+            @media screen and (max-width: 720px) and (min-width: 481px ){
+                body {
+                    font-size: 22px;
+                }
+            }
+            @media screen and (max-width: 1800px)and (min-width: 721px) {
+                body {
+                    font-size: 26px;
+                }
+            }
+            .content{
+                width: 100%;
+            }
+            .content table{
+                margin-bottom:0px;
+            }
+
+            .contentUser{
+                padding-left: 10%;
+                background-color: #fcf8e3;
+            }
+            .contentUser img{
+                width: 30px;
+                height: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" style="padding-left: 2px;padding-right: 2px;overflow-y:auto; width:100%" v-cloak>
+            <div class="content" v-for="(item, index) in allRoom">
+                <table class="table table-striped" style="table-layout:fixed;">
+                    <tbody>
+                        <tr class="success">
+                            <td>{{item.room_number}}</td>
+                            <td width="25%" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{item.name}}</td>
+                            <td width="30%">{{item.addtime}}</td>
+                            <td width="20%"><button :id="item.room_number" :data="item.game_type"  class="btn btn-success"  v-on:click="getControlUser"><span :id="item.room_number" :data="item.game_type" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+   <script src="/xss/config.js" charset="utf-8"></script>
+    <script>
+	    var wx_ip = "";
+        var wx_port = "200";
+        let token =localStorage.getItem('token');
+        var hall= "xss";
+        var hallKey= "{HALLCODE}";
+        var userInfo = {
+            id:0,
+            cards: "0",
+            nickname: "",
+            headimgurl: "",
+            individuality: "",
+            is_opengroup: 0,
+            tel: "",
+            token: "",
+        };
+
+    </script>
+    <script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+        <script>
+var appData3 = {
+    baseUrl: domain,
+    contentUser: true,
+    userId: userInfo.id.toString(),
+    allRoom: [],
+
+}, httpModule = {
+    getAuthcode: function (e) {
+        var t = {
+            dealer_num: 25,
+            phone: e,
+            openid: appData3.openid
+        };
+        console.log(appData3.authcodeTime);
+        appData3.authcodeTime > 1 || Vue.http.post(appData3.baseUrl + "/cos/getMobileSms", t).then(function (e) {
+            console.log(e.body);
+            var t = e.body;
+            0 == t.result ? (appData3.authcodeTime = 60, authcodeTimer(), appData3.authcodeType = 2) : appData3.updatePhone.phoneError = t.result_message
+        },
+                function (e) {
+                    alert("获取验证码失败")
+                })
+    }},
+        viewMethods3 = {
+            getControlUser: function (event) {
+                // `this` 在方法里指向当前 Vue 实例
+                if($(event.target).is('.glyphicon')){
+                    var contentDiv = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+                }else{
+                    var contentDiv = event.target.parentNode.parentNode.parentNode.parentNode.parentNode; 
+               }
+                if ($(contentDiv).find("div").length == 0) {
+                    var roomId = event.target.getAttribute('id');
+                    var game = event.target.getAttribute('data');
+                    var postData = {
+                        userId: appData3.userId,
+                        roomId: roomId,
+                        game: game,
+                        token: userInfo.token,
+                    };
+                    console.log('postData:', postData);
+                    Vue.http.post(appData3.baseUrl + "/cos/getControlUser", postData).then(function (e) {
+                        var t = e.body;
+                        if (t.code == 0) {
+                            var contentUserData = "";
+                            $.each(t.data, function (name, value) {
+                                contentUserData = contentUserData +
+                                        '<tr class="warning">' +
+                                        ' <td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">' + value.name + '</td>' +
+                                        '<td>' + value.id + '</td>' +
+                                        '<td><img src="' + value.img + '"></td>' +
+                                        ' <td><button class="btn btn-warning" id="' + value.id + '" roomid="' + roomId + '" game="' + game + '" onclick="CloseControlUser(this)">踢出</button></td>' +
+                                        '</tr>';
+
+                            });
+                            $(contentDiv).append(
+                                    ' <div class="contentUser" v-show="contentUser">' +
+                                    '<table class="table" id="contentUser"  cellspacing="0" cellpadding="0"  style="table-layout:fixed;">' +
+                                    '<tbody>' +
+                                    contentUserData +
+                                    ' </tbody>' +
+                                    ' </table>' +
+                                    ' </div>'
+                                    );
+
+                        } else if (t.code == 1) {
+                            alert(t.message);
+                        } else {
+                            alert(t.message);
+                        }
+                    },
+                            function (e) {
+                                alert("获取失败")
+                            })
+                } else {
+                    $("#app div.contentUser").remove();
+                }
+            }
+        }
+,
+        app = new Vue({
+            el: "#app",
+            data: appData3,
+			mounted:function(){
+				var postData = {
+                        userId: appData3.userId,
+                        token: userInfo.token,
+                    };
+				Vue.http.post(appData3.baseUrl + "/cos/getAllRoom", postData).then(function (e) {
+                        var t = e.body;
+                        if (t.code == 0) {
+                            appData3.allRoom=eval('(' + t.data + ')');
+                        }else if(t.code == 2){
+							window.location.href  =t.data;
+							return false;
+						}else{
+							alert("从新登陆");
+						}
+                    },
+            function (e) {
+                alert("获取失败")
+            })
+			},
+            methods: viewMethods3
+        })
+        ;
+function CloseControlUser(event) {
+    // `this` 在方法里指向当前 Vue 实例
+    var closeId = event.getAttribute('id');
+     var roomId = event.getAttribute('roomid');
+      var game = event.getAttribute('game');
+    var postData = {
+        userId: appData3.userId,
+        closeId: closeId,
+         roomId: roomId,
+          game: game,
+          token: userInfo.token,
+    };
+    Vue.http.post(appData3.baseUrl + "/cos/closeControlUser", postData).then(function (e) {
+        var t = e.body;
+        if (t.code == 0) {
+           var eventUser = event.parentNode.parentNode;
+            alert("踢出成功");
+            $(eventUser).remove();
+        } else {
+            alert(t.message);
+        }
+    },
+            function (e) {
+                alert("获取失败")
+            })
+
+}
+
+        </script>
+
+
+    </body>
+
+</html>
+

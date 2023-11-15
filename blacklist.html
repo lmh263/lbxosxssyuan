@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html >
+    <head>
+	 <meta charset="utf-8" >
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <title>注意</title>
+        <script>
+            function onBridgeReady() {
+                WeixinJSBridge.call('hideOptionMenu');
+            }
+
+            if (typeof WeixinJSBridge == "undefined") {
+                if (document.addEventListener) {
+                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                } else if (document.attachEvent) {
+                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                }
+            } else {
+                onBridgeReady();
+            }
+        </script>
+
+    </head>
+    <body>
+
+        <div style="position: fixed;top:10%;left:0;width: 100%;text-align: center;font-size: 18px;font-family: 微软雅黑;line-height: 50px;">
+            <h1>违规提示</h1>
+            <img src="" id="imgg" style="width: 100px;height: 100px; vertical-align: middle;border-radius: 10px;">
+            <label id="dddd"></label>
+            <div style="color: #ee4488"></div>
+            <div style="color: #ee0000">您的账号涉嫌违规，停止使用</div>
+        </div>
+    </body>
+    <script src="/xss/config.js" charset="utf-8"></script>
+    <script>
+        var hallUrl= window.location.href;
+        var hall= "xss";
+        var hallKey= "{HALLCODE}";
+        let token =localStorage.getItem('token');
+        var wx_ip = "127.1.1.1";
+        var wx_port = "200";
+        var userInfo = {
+            id:0,
+            nickname: "",
+            headimgurl: "",
+        };
+    </script>
+    <script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+	<script>
+	var dd = userInfo.nickname+"(ID:"+userInfo.id+")";
+	document.getElementById("dddd").innerHTML = dd;
+	 var img = document.getElementById("imgg");
+  //设置图片路径
+  img.setAttribute("src",userInfo.headimgurl);
+</script>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>错误</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=352,user-scalable=no" />
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            width: 100%;
+            background-color: #111924;
+            background-image: -webkit-linear-gradient(top,#111924,#303953);
+            background-image: -moz-linear-gradient(top,#111924,#303953);
+            background-image: -o-linear-gradient(top,#111924,#303953);
+            background-image: linear-gradient(top,#111924,#303953);
+            text-align: center;
+        }
+        body img {
+            width: 200px;
+            height: 200px;
+            margin-top: 100px;
+        }
+        body p {
+            font-size: 14px;
+            line-height: 1;
+            color: #fff;
+        }
+        body p:first-of-type {
+            margin-top: 50px;
+        }
+        body p+p {
+            margin-top: 10px;
+        }
+        body button {
+            width: 108px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid #fff;
+            font-size: 18px;
+            color: #fff;
+            outline: none;
+            background-color: transparent;
+            margin-top: 15%;
+        }
+        body button+button {
+            margin-left: 10%;
+        }
+        body button:active {
+            background-color: #18419f;
+            border: 1px solid #18419f;
+        }
+    </style>
+</head>
+<body env="mp">
+<img src="http://110.42.3.148:1662/xxss/error.png" />
+<p>大厅不存在</p><button type="button">返回</button>
+</body>
+<script src="http://110.42.3.148:1662/xxss/utils.js"></script>
+<script>
+    window.onload = function(){
+        var img = document.body.firstElementChild;
+        img.style.marginTop = (document.body.innerWidth*0.43)+"px";
+        var p = img.nextElementSibling;
+        p.style.marginTop = (document.body.innerWidth*0.29 - 100)+"px";
+        var buttons = document.getElementsByTagName("button");
+        for(var i = buttons.length-1; i >= 0; --i)
+            buttons[i].onclick = onClickButton;
+    }
+    function onClickButton(event){
+        var link = event.target.getAttribute("link");
+        if(link)
+            window.location.href = link;
+        else
+            Utils.back();
+    }
+</script>
+</html>

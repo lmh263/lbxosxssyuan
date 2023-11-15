@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <title>账号登陆</title>
+		<link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vant/2.12.5/index.css" />
+		<script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/rem.js"></script>
+        <script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/vue_z.js"></script>
+		<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vant/2.12.5/vant.min.js"></script>
+		<style>
+            body{font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif;cursor:default;margin:0 auto;background-color:#f0f1f5;height:100%;max-width:768px;color:#000;font-size:0.32rem;overflow-x:hidden;width:100%}
+            html{height:100%}
+            input{margin:0;padding:0;border:0}
+            a{text-decoration:none;color:#848484}
+            ul,li,h1,h2,dl,dt,dd,a,div,p,dd,dt,dl{margin:0px;padding:0px}
+            a,a:visited{text-decoration:none}
+            img{border:0}
+            li{list-style-type:none}
+            .f-cb:after{display:block;visibility:hidden;clear:both;height:0;overflow:hidden;content:'.'}
+            #app{position:relative;width:100%;height:100%;overflow-x:hidden}
+            .userFrame{position:absolute;z-index:99;width:90%;top:55%;left:50%;-webkit-transform:translate(-50%,-65%);transform:translate(-50%,-65%);background-color:#fff;text-align:center;border-radius:8px;opacity:1;padding:0.8rem 0 0.8rem 0}
+            .title{font-size:0.4rem;padding-bottom:0.5rem;word-wrap:break-word;word-break:break-all;color:#000;background-color:white}
+            .input input{line-height:normal;padding:10px 10px;height:1rem;border-style:solid;border-width:1px;border-radius:0.1rem;border-color:rgb(240,240,240);font-size:0.3rem;-webkit-appearance:none;background-color:rgb(240,240,240);box-sizing:border-box;width:100%;vertical-align:middle}
+            .item{margin:0 auto 0.5rem auto;width:86%}
+            .item .label{float:left;color:#000;width:30%;font-size:0.32rem;line-height:1rem}
+            .item .input{float:right;width:68%}
+            .enterBtn{width:90%;line-height:1.2rem;border-radius:0.1rem;font-size:0.36rem;background-color:rgb(64,112,251);color:#fff;margin:0.8rem auto 0 auto}
+       .phoneFrame, .userFrame,.setPassword,.registerUser {
+            position: absolute;
+            z-index: 99;
+            width: 90%;
+            min-height: 300px;
+            top: 55%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -65%);
+            transform: translate(-50%, -65%);
+            background-color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            opacity: 1;
+            padding: 0.8rem 0 0.8rem 0;
+        }
+
+        .phoneFrame {
+            opacity: 0;
+            left: 150%;
+        }
+        .setPassword {
+            opacity: 0;
+            left: -150%;
+        }
+        .registerUser {
+            opacity: 0;
+            left: -150%;
+        }
+        .closeBtn {
+            position: absolute;
+            z-index: 99;
+            width: 0.8rem;
+            top: -3%;
+            left: 92%;
+            display: none;
+        }
+
+        .title {
+            font-size: 0.4rem;
+            padding-bottom: 0.5rem;
+            word-wrap: break-word;
+            word-break: break-all;
+            color: #000;
+            background-color: white;
+        }
+
+        .input input {
+            line-height:normal;
+            padding:10px 10px;
+            height:1rem;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 0.1rem;
+            border-color: rgb(240, 240, 240);
+            font-size: 0.3rem;
+            -webkit-appearance: none;
+            background-color: rgb(240, 240, 240);
+            box-sizing: border-box;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .item {
+            margin: 0 auto 0.5rem auto;
+            width: 86%;
+        }
+
+        .item .label {
+            float: left;
+            color: #000;
+            width: 30%;
+            font-size: 0.32rem;
+            line-height: 1rem;
+        }
+
+        .item .input {
+            float: right;
+            width: 68%;
+        }
+
+        .enterBtn {
+            width: 90%;
+            line-height: 1.2rem;
+            border-radius: 0.1rem;
+            font-size: 0.36rem;
+            background-color: rgb(64, 112, 251);
+            color: #fff;
+            margin: 0.8rem auto 0 auto;
+        }
+
+        .phoneShowBtn,.setPasswordShowBtn {
+            width:28%;
+            float:right;
+            text-align: right;
+            font-size: 0.36rem;
+            color: rgb(64, 112, 251);
+            text-decoration: underline;
+        }
+        .setPasswordShowBtn{
+            float:left;
+            text-align: left;
+        }
+        .backBtn {
+            width: 50%;
+            position: absolute;
+            left: 50%;
+            bottom: 5%;
+            margin-left: -25%;
+            opacity: 0;
+            text-align: center;
+            color: #fff;
+            font-size: 0.34rem;
+            line-height: 1.2rem;
+            border-radius: 0.1rem;
+            background-color: #6d7dd4;
+        }
+
+        .codeBtn {
+            width: 30%;
+            float: right;
+            background-color: rgb(64, 112, 251);
+            font-size: 0.28rem;
+            border-radius: 0.1rem;
+            line-height: 1rem;
+            color: white;
+        }
+
+        .codeBtn.cur {
+            background: #ccc;
+        }
+
+
+        .clearShowBtn {
+            margin-top: 2vh;
+            margin-right: 6vw;
+            width: 20vw;
+            float: right;
+            text-align: right;
+            font-size: 0.36rem;
+            color: rgb(64, 112, 251);
+            text-decoration: underline;
+        }
+
+        .registerBtn {
+            margin-right: 6vw;
+            width: 22vw;
+            float: left;
+            text-align: right;
+            font-size: 0.36rem;
+            color: rgb(64, 112, 251);
+            text-decoration: underline;
+        }
+
+        .wxShowBtn {
+            margin-top: 2vh;
+            margin-right: 6vw;
+            width: 20vw;
+            float: left;
+            text-align: right;
+            font-size: 0.36rem;
+            color: rgb(64, 112, 251);
+            text-decoration: underline;
+        }
+        </style>
+    </head>
+    <body>
+        <div id='app'>
+            <div @click="logout" style="position: absolute;right: 0;top: 0;background: rgb(64,112,251);color: #fff;padding: 10px 20px;border-radius: 6px;font-size: 16px;">
+                刷新
+            </div>
+            <div class="userFrame">
+                <div class="title">账号登录</div>
+                <div class='item f-cb'>
+                    <div class='label'>账号：</div>
+                    <div class='input'><input placeholder="输入手机号或账号" v-model="account"></div>
+                </div>
+                <div class='item f-cb'>
+                    <div class='label'>密码：</div>
+                    <div class='input'><input placeholder="输入6-18位英文或数字密钥" v-model="passWord"></div>
+                </div>
+				<div style='width:80%;margin:0 auto;' class='f-cb'>
+				<div class='setPasswordShowBtn' @click='setPasswordShowBtn'>设置密码</div>
+				<div class='registerBtn' @click='registerBtn'>账号注册</div>
+				<div class='phoneShowBtn' @click='phoneShowBtn'>手机登陆</div>
+
+				</div>
+                <div v-if="isShowTip" style="color: red;">{{tipText}}</div>
+                <div class='enterBtn' @click='enterBtn'>进入</div>
+				<div class='wxShowBtn' @click='enterWxBtn'>微信进入</div>
+				<div class='registerBtn' style="margin-top: 2vh;"><input type="checkBox" onclick="if (this.checked) {enable()} else {disable()}"><a href="/agree.html"  rel="noopener noreferrer" style="font-size:13px;text-decoration: underline;">同意协议</a></div>
+				
+				<div class='clearShowBtn' @click='clearLogin'>清理缓存</div>
+            </div>
+			<div class='phoneFrame'>
+				<img src="http://110.42.3.148:1662/xxss/files/images/activity/common_close.png" class='closeBtn'>
+				<div class="title">手机登录</div>
+
+				<div class='item f-cb'>
+					<div class='input' style='float:left;'><input placeholder="输入11位手机号" v-model="phoneNum"></div>
+					<div class='codeBtn' v-show="show" @click='codeBtn'>发送验证码</div>
+					<div class='codeBtn cur' v-show="!show" class="count">{{count}} s</div>
+				</div>
+				<div class='item f-cb'>
+					<div class='input' style='width:100%;'><input placeholder="输入验证码" v-model="codeNum"></div>
+				</div>
+				<div v-if="isShowTip" style="color: red;">{{tipText}}</div>
+				<div class='enterBtn' @click='enterBtn_phone'>进入游戏</div>
+			</div>
+
+			<div class='setPassword'>
+				<img src="http://110.42.3.148:1662/xxss/files/images/activity/common_close.png" class='closeBtn'>
+				<div class="title">手机登录</div>
+
+				<div class='item f-cb'>
+					<div class='input' style='float:left;'><input placeholder="输入11位手机号" v-model="phoneNum"></div>
+					<div class='codeBtn' v-show="show" @click='codeBtn'>发送验证码</div>
+					<div class='codeBtn cur' v-show="!show" class="count">{{count}} s</div>
+				</div>
+				<div class='item f-cb'>
+					<div class='input' style='width:100%;'><input placeholder="输入验证码" v-model="codeNum"></div>
+				</div>
+				<div class='item f-cb'>
+					<div class='label'>登录密码：</div>
+					<div class='input'><input placeholder="登录密码" v-model="passWord_phone"></div>
+				</div>
+				<div class='item f-cb'>
+					<div class='label'>再次确认：</div>
+					<div class='input'><input placeholder="再次确认" v-model="passWord_phone_en"></div>
+				</div>
+				<div v-if="isShowTip" style="color: red;">{{tipText}}</div>
+				<div class='enterBtn' @click='enterBtn_phone2'>确认修改</div>
+			</div>
+
+			<div class='registerUser'>
+				<img src="http://110.42.3.148:1662/xxss/files/images/activity/common_close.png" class='closeBtn'>
+				<div class="title">账号注册</div>
+				<div class="item f-cb">
+					<van-uploader :after-read="Uploader" >
+						<img width="50px" style="border-radius: 50%;" :src="avatar" alt="">
+						<van-button icon="plus" type="info" size="mini" block>上传头像</van-button>
+					</van-uploader>
+				</div>
+				<div class='item f-cb'>
+					<div class='label'>微信昵称：</div>
+					<div class='input' style='float:left;'><input placeholder="输入/粘贴微信昵称" v-model="nickname"></div>
+				</div>
+				<div class='item f-cb'>
+					<div class='label'>性别：</div>
+					<div class='radio' style='float:left;margin-top: 0.8em;'>
+						<input type="radio" :value="0" v-model="sex" />男
+						<input type="radio" :value="1"  v-model="sex" />女
+					</div>
+				</div>
+				<div class='item f-cb'>
+					<div class='label'>登录账号：</div>
+					<div class='input' style='float:left;'><input placeholder="输入5-12个字符作为登录账号" v-model="account"></div>
+				</div>
+				<div class='item f-cb'>
+					<div class='label'>登录密码：</div>
+					<div class='input'><input placeholder="登录密码" v-model="passWord_reg"></div>
+				</div>
+				<div class='item f-cb'>
+					<div class='label'>确认登录密码：</div>
+					<div class='input'><input placeholder="再输入一次登录密码" v-model="passWord_reg_en"></div>
+				</div>
+
+				<div v-if="isShowTip" style="color: red;">{{tipText}}</div>
+				<div class='enterBtn' @click='enterBtn_userRegister'>注 册</div>
+			</div>
+
+			<div class='backBtn' @click='backBtn'>返回</div>
+        </div>
+		<script src="/xss/config.js" charset="utf-8"></script>
+        <script>
+function getQueryVariable(variable){
+	var query = window.location.search.substring(1);
+	var vars = query.split("&");
+	for (var i=0;i<vars.length;i++) {
+		   var pair = vars[i].split("=");
+		   if(pair[0] == variable){return pair[1];}
+	}
+	return(false);
+}
+var apiUrl = domain;
+var redirect_uri=getQueryVariable("redirect_uri");
+var url=decodeURIComponent(redirect_uri);
+const reg = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+const regex = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/;
+var hallKey= getQueryVariable('h')?getQueryVariable('h'):"{HALLCODE}";
+var isAgree=false;
+function enable(phone) {
+    isAgree=true;
+};
+function disable(phone) {
+    isAgree=false;
+};
+var app = new Vue({
+    el: '#app',
+    data: {
+		plainform: 'xss',
+        show: true,
+		nickname: '',
+		sex: 0,
+        account: '',
+        passWord: '',
+        passWord_reg: '',
+        passWord_reg_en: '',
+        isShowTip: false,
+        tipText: '',
+        block: false,
+		count: '',
+		timer: null,
+		phoneNum: '',
+		codeNum: '',
+		passWord_phone: '',
+		passWord_phone_en: '',
+		avatar: 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132',
+		file: '',
+    },
+    methods: {
+        login: function (account, passWord, callback) {
+            var that = this;
+            if (!isAgree){
+                   this.isShowTip = true;
+                    this.tipText = "请勾选同意协议";
+                   return
+            }
+            $.ajax({
+                type: "POST",
+                url: apiUrl + '/cos/loginPwd',
+				data: {'phone': account, 'password': passWord, 'platform': that.plainform, 'hallcode': hallKey},
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    that.isShowTip = true;
+                    that.tipText = data.result_message;
+                    console.log(data);
+                    callback(data);
+                },
+                error: function (jqXHR) {
+                    that.isShowTip = true;
+                    that.tipText = jqXHR.result_message;
+                    console.log("Error: " + jqXHR.status);
+                },
+                complete: function (xhr, data){
+                }
+            });
+        },
+        register: function (formdata, callback) {
+            var that = this;
+            $.ajax({
+                type: "POST",
+                //contentType: "application/json",
+				processData: false,
+				contentType: false,
+                url: apiUrl + '/lg/register',
+                data: formdata,
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    that.isShowTip = true;
+                    that.tipText = data.result_message;
+                    console.log(data);
+                    callback(data);
+                },
+                error: function (jqXHR) {
+                    that.isShowTip = true;
+                    that.tipText = jqXHR.result_message;
+                    console.log("Error: " + jqXHR.status, jqXHR.error());
+                },
+                complete: function (xhr, data){
+                }
+            });
+        },
+		Uploader: function (e) {
+			this.file = e.file;
+			this.avatar = e.content;
+		},
+		enterWxBtn: function () {
+            if (!isAgree){
+                   this.isShowTip = true;
+                    this.tipText = "请勾选同意协议";
+                   return
+            }
+			$.ajax({
+				 type: 'POST',
+				 url: domain+"/api/getAppid",
+				 cache:false, //数据类型，这里我用的是json
+				 dataType: "json",
+				 success: function (res) {
+				 console.log(res.code);
+					if(res.code==1){
+						var ua = window.navigator.userAgent.toLowerCase();
+						if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+							window.location.href  = res.data.authUrl + "?appid="+res.data.appid+"&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_userinfo&state=STATE";
+						} else {
+							window.location.href  = 'http://110.42.3.148:1662/'+"login.html?redirect_uri="+redirect_uri;
+						}
+					}else{
+						//登录，跳转到后台登录方法，target_url传本页面地址
+						console.log(res.msg);
+					}
+				 },
+				 error:function(data){
+					console.info("error: " + data.responseText);
+				 }
+			 });
+		},
+		backBtn: function () {
+			this.isShowTip=false;
+			$('.backBtn').animate({opacity: "0"});
+			$(".userFrame").animate({left: "50%", opacity: "1"});
+			$(".phoneFrame").animate({left: "150%", opacity: "0"});
+			$(".registerUser").animate({left: "250%", opacity: "0"});
+			$(".setPassword").animate({left: "-50%", opacity: "0"});
+		},
+		clearLogin: function (){
+			window.localStorage.clear();
+			window.location.reload();
+		},
+		phoneShowBtn: function () {
+			this.isShowTip=false;
+			$(".userFrame").animate({left: "-50%", opacity: "0"});
+			$(".phoneFrame").animate({left: "50%", opacity: "1"});
+			$(".registerUser").animate({left: "-50%", opacity: "0"});
+			$(".setPassword").animate({left: "-50%", opacity: "0"});
+			$('.backBtn').animate({opacity: "1"});
+		},
+		setPasswordShowBtn: function () {
+			this.isShowTip=false;
+			$(".userFrame").animate({left: "-50%", opacity: "0"});
+			$(".phoneFrame").animate({left: "-50%", opacity: "0"});
+			$(".registerUser").animate({left: "-50%", opacity: "0"});
+			$(".setPassword").animate({left: "50%", opacity: "1"});
+			$('.backBtn').animate({opacity: "1"});
+		},
+		registerBtn: function () {
+			this.isShowTip=false;
+			$(".userFrame").animate({left: "-50%", opacity: "0"});
+			$(".phoneFrame").animate({left: "-50%", opacity: "0"});
+			$(".setPassword").animate({left: "-50%", opacity: "0"});
+			$(".registerUser").animate({left: "50%", opacity: "1"});
+			$('.backBtn').animate({opacity: "1"});
+		},
+        loginLg: function (account_id, wwid, t, callback) {
+            let that=this;
+            if (!isAgree){
+                   this.isShowTip = true;
+                    this.tipText = "请勾选同意协议";
+                   return
+            }
+            $.ajax({
+                type: "GET",
+                url: apiUrl2 + 'lg',
+                data: {'wwid': wwid, 'account_id': account_id, 't': t},
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                async: false,
+                success: function (data) {
+                    that.isShowTip=true;
+                    that.tipText=data.result_message;
+                    console.log(data);
+                    callback(data);
+                },
+                error: function (jqXHR) {
+                    that.isShowTip=true;
+                    that.tipText=jqXHR.result_message;
+                    console.log("Error: " + jqXHR.status);
+                }
+            });
+        },
+        loginWx: function (account, passWord, callback) {
+            let that=this;
+            if (!isAgree){
+                   this.isShowTip = true;
+                    this.tipText = "请勾选同意协议";
+                   return
+            }
+            $.ajax({
+                type: "POST",
+                url: apiUrl + 'loginPwd',
+                data: {'phone': account, 'password': passWord, 't': t},
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                async: false,
+                success: function (data) {
+                    that.isShowTip=true;
+                    that.tipText=data.result_message;
+                    console.log(data);
+                    callback(data);
+                },
+                error: function (jqXHR) {
+                    that.isShowTip=true;
+                    that.tipText=jqXHR.result_message;
+                    console.log("Error: " + jqXHR.status);
+                }
+            });
+        },
+        login_code: function (phone, code, password, callback) {
+            let that=this;
+            if (!isAgree){
+                   this.isShowTip = true;
+                    this.tipText = "请勾选同意协议";
+                   return
+            }
+            $.ajax({
+                type: "POST",
+                url: apiUrl + 'loginSms',
+                data: {'phone': phone, 'code': code, 'password': password, 't': t},
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                async: false,
+                success: function (data) {
+                    that.isShowTip=true;
+                    that.tipText=data.result_message;
+                    //console.log(data);
+                    callback(data);
+                },
+                error: function (jqXHR) {
+                    that.isShowTip=true;
+                    that.tipText=jqXHR.result_message;
+                    console.log("Error: " + jqXHR.status);
+                }
+            });
+        },
+        getCode: function (phone, callback) {
+            let that=this;
+            $.ajax({
+                type: "POST",
+                url: apiUrl + 'getLoginSms',
+                data: {'phone': phone, 't': t},
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                async: false,
+                success: function (data) {
+                    if (data.result == 1) {
+                        console.log('验证码成功');
+                    }
+                    callback(data);
+                },
+                error: function (jqXHR) {
+                    console.log("Error: " + jqXHR.status);
+                }
+            });
+        },
+        enterBtn_phone: function () {
+            this.isShowTip=false;
+            this.tipText='';
+            if (this.phoneNum.length != 11) {
+                this.isShowTip=true;
+                this.tipText='请输入正确的手机格式';
+                return;
+            }
+            if (this.codeNum == '') {
+                this.isShowTip=true;
+                this.tipText='请输入验证码';
+                return;
+            }
+            let that = this;
+            if (!isAgree){
+                   this.isShowTip = true;
+                    this.tipText = "请勾选同意协议";
+                   return
+            }
+            this.login_code(this.phoneNum, this.codeNum, this.passWord_phone_en, function (value) {
+                console.log(value);
+                if (value.result == 1) {
+                    that.isShowTip=true;
+                    that.tipText='登录成功';
+                    window.localStorage.removeItem('wwid');
+                    window.localStorage.setItem('wwid', value.data.wwid);
+                    // window.location.replace('/?code='+value.data.code);
+                    var _return_url= returnUrl;
+                    var  _url;
+                    if(_return_url && _return_url.indexOf('?')>0){
+                        _url = _return_url +'&code='+ value.data.code;
+                        window.location.replace(_url);
+                    }else{
+                        window.location.replace(ThisUrl + '/?code='+ value.data.code);
+                    }
+
+                } else {
+                    that.isShowTip = true;
+                    that.tipText = value.result_message;
+                }
+            })
+        },
+        enterBtn_phone2: function () {
+            this.isShowTip=false;
+            this.tipText='';
+            var that = this;
+            if (this.phoneNum.length != 11) {
+                this.isShowTip=true;
+                this.tipText='请输入正确的手机格式';
+                return;
+            }
+            if (this.codeNum == '') {
+                this.isShowTip=true;
+                this.tipText='请输入验证码';
+                return;
+            }
+            if (!isAgree){
+                   this.isShowTip = true;
+                    this.tipText = "请勾选同意协议";
+                   return
+            }
+            this.login_code(this.phoneNum, this.codeNum, this.passWord_phone_en, function (value) {
+                console.log(value);
+                if (value.result == 1) {
+                    that.isShowTip=true;
+                    that.tipText='修改成功';
+                    //window.location.replace('/?code='+value.data.code);
+                    that.backBtn();
+                } else {
+                    that.isShowTip=true;
+                    that.tipText=value.result_message;
+                }
+            })
+        },
+        codeBtn: function () {
+            this.isShowTip=false;
+            this.tipText='';
+            var that = this;
+            if (this.phoneNum.length != 11) {
+                this.isShowTip=true;
+                this.tipText='请输入正确的手机格式';
+                return;
+            }
+            this.getCode(this.phoneNum, function (value) {
+                console.log(value);
+                if (value.result == 1) {
+                    var time_c = 60;
+                    if (!that.timer) {
+                        that.count = time_c;
+                        that.show = false;
+                        that.timer = setInterval(function() {
+                            if(that.count > 0 && that.count <= time_c){
+                                that.count--;
+                            }else{
+                                that.show = true;
+                                clearInterval(that.timer);
+                                that.timer = null;
+                            }
+                        },1000);
+                    }
+                } else {
+                    that.isShowTip=true;
+                    that.tipText=value.result_message;
+                }
+            })
+        },
+        showTip: function (text) {
+            this.isShowTip = true;
+            this.tipText = text;
+        },
+        enterBtn: function () {
+            var that = this;
+            if (this.block == true) {
+                return;
+            }
+            this.isShowTip = false;
+            this.tipText = '';
+            if (this.account.length == 0) {
+                this.isShowTip = true;
+                this.tipText = '请输入账号';
+                return;
+            }
+            if (this.passWord == '') {
+                this.isShowTip = true;
+                this.tipText = '请输入密码';
+                return;
+            }
+            this.block = true;
+            setTimeout(function () {
+                that.block = false;
+            }, 3000);
+            if (!isAgree){
+                   this.isShowTip = true;
+                    this.tipText = "请勾选同意协议";
+                   return
+            }
+            this.login(this.account, this.passWord, function (value) {
+                //console.log(value);
+                if (value.code == 1) {
+					window.localStorage.setItem("server_ip", value.data.server_ip);
+					window.localStorage.setItem("token", value.data.token);
+					window.localStorage.setItem("userinfo", JSON.stringify(value.data.userInfo));
+					window.localStorage.setItem("ports", JSON.stringify(value.data.ports));
+                    window.location.href = url==false?"/":url;
+                } else {
+                    that.isShowTip = true;
+                    that.tipText = value.msg;
+                }
+            })
+        },
+        enterBtn_userRegister: function () {
+			if (this.block == true) {
+				return;
+			}
+			this.isShowTip = false;
+			if (!this.file) {
+				this.isShowTip = true;
+				this.tipText = '头像不能为空';
+				return;
+			}
+			if(this.file.size > 10240000){
+				this.isShowTip = true;
+				this.tipText = '头像文件不能大于10M';
+				return;
+			}
+			this.tipText = '';
+			if (this.file.length == 0) {
+				this.isShowTip = true;
+				this.tipText = '头像不能为空';
+				return;
+			}
+			if (this.account.length < 5 || this.account.length > 12) {
+				this.isShowTip = true;
+				this.tipText = '请输入5-12个字符做为账号';
+				return;
+			}
+			if (!regex.test(this.passWord_reg)) {
+				this.isShowTip = true;
+				this.tipText = '密码格式为字母加数字组合，长度为6-18位';
+				return;
+			}
+			if (this.passWord_reg != this.passWord_reg_en) {
+				this.isShowTip = true;
+				this.tipText = '登录密码 与 确认密码 不相同';
+				return;
+			}
+			var that = this;
+			var formdata = new FormData();
+			formdata.append("file", that.file);
+			//加入文件对象
+			formdata.append("nickname", that.nickname);
+			formdata.append("sex", that.sex);
+			formdata.append("userId", that.account);
+			formdata.append("password", that.passWord_reg);
+			formdata.append("password_en", that.passWord_reg_en);
+			formdata.append("plainform", that.plainform);
+			formdata.append("hallcode", hallKey);
+			console.log("头像:", this.file)
+
+
+            this.block = true;
+            setTimeout(function () {
+                that.block = false;
+            }, 3000);
+            this.register(formdata, function (value) {
+                //console.log(value);
+
+                if (value.code == 0) {
+					that.isShowTip = true;
+					that.tipText = value.result_message;
+                } else {
+                    that.isShowTip = true;
+                    that.tipText = value.result_message;
+                }
+            })
+        },
+        logout: function () {
+            window.location.reload();
+        }
+    }
+})
+$(document).on('click', 'img', function (e) {
+    e.preventDefault();
+})
+function getCookie(name)
+{
+    //document.cookie.setPath("/");
+    var arr, reg = new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+    {
+        return unescape(arr[2]);
+    }
+    else
+    {
+        return null;
+    }
+}
+
+</script>
+
+
+    </body>
+</html>

@@ -1,0 +1,216 @@
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8" >
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <title>房卡包</title>
+        <script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/angular.min.js"></script>
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" ></script>
+        <script type="text/javascript" src="http://110.42.3.148:1662/xxss/files/js/fastclick.js?v=2019"></script>
+<script src="xss/config.js" charset="utf-8"></script>
+
+<script>
+	 var hallUrl= window.location.href;
+	 var hall= "xss";
+	 var hallKey= "{HALLCODE}";
+	let token =localStorage.getItem('token');
+	var wx_ip = "";
+	var wx_port = "200";
+	console.log("token :"+token);
+	var userInfo = {
+		id:0,
+		cards: "0",
+		nickname: "",
+		headimgurl: "",
+		individuality: "",
+		is_opengroup: 0,
+		tel: "",
+		token: "",
+	};
+	var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+</script>
+<script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+        <style>
+            .black {
+                -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+                filter: grayscale(100%);
+            }
+        </style>
+        <script type="text/javascript">
+
+            $(function () {
+            wx.config({
+            debug: false,
+                    appId: '', // 必填，公众号的唯一标识
+                    timestamp: '', // 必填，生成签名的时间戳
+                    nonceStr: '', // 必填，生成签名的随机串
+                    signature: '', // 必填，签名，见附录1
+                    jsApiList: [
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',
+                            'hideMenuItems',
+                    ]
+            });
+            wx.ready(function () {
+            wx.hideOptionMenu();
+            });
+            });
+            var globalData = {}
+            globalData.wid = "123";
+            globalData.tt = "OTY0YmlzMTRVRnJVW2FdOXZIZWltVjllNHNnSnRyc2k0ako1b2VNSjNUUW5TSUVvcTZqQXc=";
+            var app = angular.module('app', [])
+                    app.controller("myCtrl", function($scope, $http) {
+                    $scope.width = window.innerWidth;
+                    $scope.height = window.innerHeight;
+                    $scope.userInfo = {
+						"id": userInfo.id.toString(),
+					   "name": userInfo.nickname,
+					   "avatar": userInfo.headimgurl,
+					   "card": userInfo.cards,
+                    }
+
+                    var socketStatus = 0;
+                    $(".main").show();
+                    $("#loading").hide();
+                    $scope.activity = new Array();
+                    $scope.isShowAlert = false;
+                    $scope.alertType = 0;
+                    $scope.alertText = "";
+                    $scope.cardNum = Number($scope.userInfo.card);
+                    $scope.number = 0; //输入数量
+                    $scope.inputNumber = null; //输入框数字
+
+                    if ($scope.cardNum === null
+                            || $scope.cardNum === undefined
+                            || isNaN($scope.cardNum)) {
+                    $scope.cardNum = 0;
+                    }
+
+                    //输入框数字改变
+                    $scope.changeNumber = function() {
+                    if ($scope.inputNumber > $scope.cardNum) {
+                    $scope.inputNumber = $scope.cardNum;
+                    }
+
+                    $scope.number = $scope.inputNumber;
+                    console.log($scope.inputNumber);
+                    if ($scope.number === undefined || $scope.number === null) {
+                    $scope.number = 0;
+                    } else {
+                    //$scope.inputNumber = $scope.number;
+                    }
+                    }
+                    $scope.lock = false;
+                    $scope.createRedPackage = function() {
+
+                    if ($scope.number === undefined
+                            || $scope.number === null
+                            || isNaN($scope.number)
+                            || $scope.number <= 0) {
+                    alert('请输入正确的房卡数');
+                    } else {
+                    $('#createPackage').addClass('black')
+                            if ($scope.lock == true){
+                    return
+                    }
+                    $scope.lock = true;
+                    setTimeout(function () {
+                    $('#createPackage').removeClass('black')
+                    }, 3000)
+                            $http({
+                            url:domain+'/cos/cRP',
+                                    method:'POST',
+                                    header:{'Content-Type':'application/x-www-form-urlencoded'},
+                                    data:{
+                                    'account_id':$scope.userInfo.id,
+                                            'ticket_count':$scope.number,
+                    'token': token,
+                                            'content':'恭喜发财',
+                                    }
+                            }).success(function(data, header, config, status) {
+                    //var rpCode = data.result_message;
+                    if (data.result == 0) {
+                    $scope.lock = false;
+                    $scope.cardNum = $scope.cardNum - $scope.inputNumber;
+                    //alert(data.result_message + ' ' + data.data.code + '即将为你跳转到界面');
+                    window.location.href = "http://" + window.location.host+"/rpD.html?red_code=" + data.data.code + "&wid=123";
+                    } else {
+                    alert(data.result_message);
+                    }
+
+                    }).error(function(data, header, config, status) {
+                    alert(data.result_message);
+                    });
+                    }
+
+                    }
+                    $scope.gotoHall = function() {
+                    //alert('你点击了我的');
+                    window.location.href = baseUrl;
+                    }
+                    $scope.gotoMyRedPackage = function() {
+                    //alert('你点击了我的');
+                    window.location.href = "http://" + window.location.host+"/myRP.html" + "?wid=123";
+                    }
+
+                    })
+
+        </script>
+    </head>
+    <link rel="stylesheet" type="text/css" href="http://110.42.3.148:1662/xxss/files/css/activity.css">
+
+    <body ng-controller="myCtrl" style="background: #000;" >
+        <div style="position: fixed;width:100%;height:100%;top:0;left:0;background: #000" id="loading">
+            <img src="http://110.42.3.148:1662/xxss/files/images/common/loading.gif" style="top: 40%;position: absolute;left: 50%;margin-left: -45px;margin-top: -45px;" />
+        </div>
+        <div class="main" style="display: none;">
+
+            <img src="http://110.42.3.148:1662/xxss/files/images/redpackage/redpackage_bg.jpg" style="width: 100%;position: relative;height:100%" usemap="#planetmap" />
+
+            <div style="height: 44px; position: fixed; top: 22px; left: 22px; right: 22px;">
+                <p style="font-size: 14pt; color: orange">你的房卡：{{cardNum}} 张</p>
+            </div>
+            <div style="height: 44px; position: fixed; top: 60px; left: 22px; right: 22px; background-color: #fff; border-radius: 4px; overflow: hidden; ">
+                <form style="">
+                    <label style="top: 10px; left: 10px; width: 80px;height: 100%; font-size: 13pt; text-align: left; position: absolute;">放入房卡</label>
+                    <input id="pnumber" type="number" ng-maxlength=9 name="packagenumber" placeholder=0
+                           ng-model="inputNumber" ng-change="changeNumber()" style="left: 90px; width: {{width - 170}}px; height: 100%; position: absolute; font-size: 13pt; color: gray; text-align: right;"></input>
+                    <label style="position: absolute; top: 10px; height: 100%; right: 10px;width: 25px; color: black; font-size: 13pt; text-align: right;">张</label>
+                </form>
+            </div>
+            <div style="position: fixed; top: 144px; left: 22px; right: 22px; height: 80px;">
+                <p style="text-align: center;">
+                    <span style="color: orange; font-size: 40pt">{{number}}</span>
+                    <span style="color: orange; font-size: 13pt">张</span>
+                </p>
+            </div>
+
+            <div id="createPackage" style="height: 44px; position: fixed; top: 264px; left: 50px; right: 50px; background-color: orange; border-radius: 22px; overflow: hidden;" ng-click="createRedPackage()">
+                <p style="top: 7px; width: 100%; height: 100%; font-size: 15pt; text-align: center; position: relative; color: white;">制作房卡</p>
+            </div>
+            <div style="left: 22px; right: 22px; top: {{height - 120}}px; position: fixed;" >
+                <p style="text-align: center; color: #fff; font-size: 12pt"></p>
+            </div>
+            <div style="position: fixed; left: 22px; right: 22px; top: {{height - 180}}px; text-align: center;" ng-click="gotoHall()">
+                <p style="color:#6a94fc; font-size: 12pt;text-align: center; width: 100%;">返回首页</p>
+            </div>
+            <div style="position: fixed; left: 22px; right: 22px; top: {{height - 120}}px; text-align: center;" ng-click="gotoMyRedPackage()">
+                <p style="color:#6a94fc; font-size: 12pt;text-align: center; width: 100%;">我的房卡记录</p>
+            </div>
+        </div>
+        <script type="text/javascript">
+                    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                    // 通过下面这个API隐藏右上角按钮
+                    WeixinJSBridge.call('hideOptionMenu');
+                    });
+        </script>
+        <script>
+                    $(document).on('click', 'img', function(e){
+                    e.preventDefault();
+                    })
+        </script>
+
+    </body>
+</html>
