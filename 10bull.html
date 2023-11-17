@@ -21,7 +21,7 @@
 	var gameType=1;
 	 var hallUrl= window.location.href;
 	 var hall= "xss";
-	 var hallKey= "{HALLCODE}";
+	 var hallKey= "";
 	let token =localStorage.getItem('token');
 	var wx_ip = "127.1.1.1";
 	var wx_port = "200";
@@ -47,7 +47,7 @@
 	  pg: 200,
 	  sag: 200,
 	};
-	var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+
 	var roomInfo = {
 		"room_number":"",
 		"roomStatus":"",
@@ -61,6 +61,9 @@
 	};
 </script>
     <script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+<script>
+    var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+</script>
 <script>
 	var roomUrl=encodeURIComponent("http://" + window.location.host+roomInfo.roomUrl);
 	document.getElementsByTagName("title")[0].innerText = roomInfo.titleInfo;
