@@ -190,6 +190,11 @@
             color: rgb(64, 112, 251);
             text-decoration: underline;
         }
+        input[type=checkbox] {
+            width: 22px;
+            height: 22px;
+            vertical-align: bottom;
+            }
         </style>
     </head>
     <body>
@@ -216,7 +221,7 @@
                 <div v-if="isShowTip" style="color: red;">{{tipText}}</div>
                 <div class='enterBtn' @click='enterBtn'>进入</div>
 				<div class='wxShowBtn' @click='enterWxBtn'>微信进入</div>
-				<div class='registerBtn' style="margin-top: 2vh;"><input type="checkBox" onclick="if (this.checked) {enable()} else {disable()}"><a href="/agree.html"  rel="noopener noreferrer" style="font-size:13px;text-decoration: underline;">同意协议</a></div>
+				<div class='registerBtn' style="margin-top: 2vh;text-align: center;margin-right: 0px;width: 38vw;"><input type="checkBox" onclick="if (this.checked) {enable()} else {disable()}"><a href="/agree.html"  rel="noopener noreferrer" style="font-size:16px;text-decoration: underline;">同意协议</a></div>
 				
 				<div class='clearShowBtn' @click='clearLogin'>清理缓存</div>
             </div>
@@ -315,7 +320,7 @@ var redirect_uri=getQueryVariable("redirect_uri");
 var url=decodeURIComponent(redirect_uri);
 const reg = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
 const regex = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/;
-var hallKey= getQueryVariable('h')?getQueryVariable('h'):"{HALLCODE}";
+var hallKey= getQueryVariable('h')?getQueryVariable('h'):"";
 var isAgree=false;
 function enable(phone) {
     isAgree=true;

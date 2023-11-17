@@ -14,7 +14,7 @@
 <script>
 	 var hallUrl= window.location.href;
 	 var hall= "xss";
-	 var hallKey= "{HALLCODE}";
+	 var hallKey= "";
 	let token =localStorage.getItem('token');
 	var wx_ip = "";
 	var wx_port = "200";
@@ -29,9 +29,12 @@
 		tel: "",
 		token: "",
 	};
-	var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+
 </script>
 <script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+<script>
+    var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+</script>
         <style>
             .black {
                 -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
@@ -135,7 +138,7 @@
                     $scope.lock = false;
                     $scope.cardNum = $scope.cardNum - $scope.inputNumber;
                     //alert(data.result_message + ' ' + data.data.code + '即将为你跳转到界面');
-                    window.location.href = "http://" + window.location.host+"/rpD.html?red_code=" + data.data.code + "&wid=123";
+                    window.location.href = "http://" + window.location.host+"/rpD.html?h="+hallKey+"&red_code=" + data.data.code + "&wid=123";
                     } else {
                     alert(data.result_message);
                     }

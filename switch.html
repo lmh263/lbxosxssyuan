@@ -67,7 +67,7 @@
         var wx_port = "200";
         let token =localStorage.getItem('token');
         var hall= "xss";
-        var hallKey= "{HALLCODE}";
+        var hallKey= "";
         var userInfo = {
             id:0,
             cards: "0",
@@ -81,6 +81,9 @@
 
     </script>
     <script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+<script>
+    var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+</script>
         <script>
 var appData3 = {
     baseUrl: domain,

@@ -15,7 +15,7 @@
 <script>
 	 var hallUrl= window.location.href;
 	 var hall= "xss";
-	 var hallKey= "{HALLCODE}";
+	 var hallKey= "";
 	let token =localStorage.getItem('token');
 	var wx_ip = "";
 	var wx_port = "200";
@@ -30,9 +30,12 @@
 		tel: "",
 		token: "",
 	};
-	var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+
 </script>
 <script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+<script>
+    var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+</script>
 <script type="text/javascript">
 $(function () {
     wx.config({
@@ -310,7 +313,7 @@ app.controller("myCtrl", function($scope,$http) {
     }
 
      $scope.clickCell = function (data) {
-       var url = "http://" + window.location.host+"/rpD.html?red_code=" + data.code;
+       var url = "http://" + window.location.host+"/rpD.html?h="+hallKey+"&red_code=" + data.code;
         window.location.href = url;
      }
 

